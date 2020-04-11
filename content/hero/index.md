@@ -1,8 +1,8 @@
 ---
 title: 'Hi, my name is'
-name: 'Brittany Chiang'
-subtitle: 'I build things for the web.'
+name: 'Jinesh Soni'
+subtitle: 'I like building stuff.'
 contactText: 'Get In Touch'
 ---
 
-I'm a software engineer based in Boston, MA specializing in building (and occasionally designing) exceptional, high-quality websites and applications.
+5+ years of experience in delivering dream products for one who trusted me. Expert Android developer | Intrapreneur | Flutter developer | IOT Engineer | Crypto enthusiast | ML hobbyist
