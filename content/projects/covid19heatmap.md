@@ -8,7 +8,7 @@ tech:
   - Html
   - Mapbox
   - geoJson
-company: 'thinkwik'
+company: ''
 showInProjects: true
 ---
 

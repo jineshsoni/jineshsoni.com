@@ -6,7 +6,7 @@ external: 'https://github.com/jineshsoni/heatmapAPI'
 android: ''
 tech:
   - Dart
-company: 'thinkwik'
+company: ''
 showInProjects: true
 ---
 
