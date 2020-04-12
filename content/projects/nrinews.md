@@ -1,6 +1,6 @@
 ---
 date: '2017-09-12'
-title: 'NRI News'
+title: 'JCARC'
 github: ''
 external: 'http://www.jcarc.in/'
 android: ''
