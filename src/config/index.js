@@ -6,7 +6,7 @@ module.exports = {
     'Jinesh, Soni, Jinesh soni, jineshsoni, jineshsoni.com, jinesh github, software engineer, front-end engineer, web developer, javascript, northeastern',
   siteUrl: 'https://jineshsoni.com',
   siteLanguage: 'en_US',
-  googleAnalyticsID: 'UA-45666519-2',
+  googleAnalyticsID: 'UA-138043600-1',
   googleVerification: 'DCl7VAf9tcz6eD9gb67NfkNnJ1PKRNcg8qQiwpbx9Lk',
   name: 'Jinesh Soni',
   location: 'Ahmedabad, Inida',
