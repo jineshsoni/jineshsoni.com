@@ -1,17 +1,16 @@
 ---
-date: '2018-12-03'
+date: '2017-12-03'
 title: 'Team lead | Android, Flutter Developer'
 company: 'Thinkwik'
 location: 'Ahmedabad, IN'
-range: 'Dec 2018 - Present'
+range: 'Dec 2016 - Dec 2017'
 url: 'https://www.thinkwik.com/'
 ---
 
-Responsible for coordinating within team and clients, and delivering excellent products, Also leading team in mobile developement and developing mobile applications.
+Leading team in mobile developement and creating awesome mobile applications.
 
-- Write modern, performant, maintainable code for a diverse array of client and internal projects
-- Following Agile development approach to deliver world class product
-- Communicate with multi-disciplinary teams of engineers, designers, producers, and clients on a daily basis
-- Working with continous delivery and continous integration
+- Conceptualized, designed, developed and deployed preloaded games and applications for android based mobile phones
+- Insured all applications were developed with the SDLC Software Development lifecycle to deliver world class product
+- Researched on application acceptance and solicited feedback from users to make the new and existing applications more user friendly
 - Implementing latest Material design techniques
-- Following Koltin only approach with DI/Databinding/RxKotlin and MVVM/P architecture pattern
+- Following Koltin only approach with MVP architecture pattern

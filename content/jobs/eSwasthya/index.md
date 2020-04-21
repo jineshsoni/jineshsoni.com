@@ -3,7 +3,7 @@ date: '2014-07-01'
 title: 'Software Engineer Co-op'
 company: 'eSwasthya'
 location: 'Ahmedabad, In'
-range: 'July 2014 - March 2016'
+range: 'July 2014 - March 2015'
 url: 'https://eswasthya.in/'
 ---
 

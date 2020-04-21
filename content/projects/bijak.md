@@ -10,8 +10,8 @@ tech:
   - Dagger2
   - MVVM
   - Realm
-company: ''
-showInProjects: false
+company: 'Bowstring'
+showInProjects: true
 ---
 
 Bijak is an agriculture app that connects you to reliable and trustworthy buyers(aadthis), institutions (feeds, mills), brokers (dalal), suppliers(loaders) and farmers (kisan) to help you get better rates (bhav) for the crop (fasal) and increase your income.

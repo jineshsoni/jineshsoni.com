@@ -14,7 +14,7 @@ tech:
   - Retrofit2
   - Stetho
   - Glide
-company: ''
+company: 'Bowstring'
 showInProjects: true
 ---
 

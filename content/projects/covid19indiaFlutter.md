@@ -8,7 +8,7 @@ tech:
   - Flutter
   - Flutter web
   - Graphs
-company: 'thinkwik'
+company: ''
 showInProjects: true
 ---
 
