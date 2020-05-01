@@ -1,16 +1,16 @@
 ---
 date: '2019-09-12'
-title: 'Wandergier'
+title: 'TRL world'
 github: ''
-external: 'https://wandergier.com/'
-android: 'https://play.google.com/store/apps/details?id=com.wandergier'
+external: ''
+android: ''
 tech:
   - Kotlin
   - Kotlin coroutine
   - MVVM
   - RxKoltin
-company: 'thinkwik'
+company: ''
 showInProjects: false
 ---
 
-The perfect app for creating new travel adventures whether a weekend getaway or long international trip, Wandergier helps you meet other travelers nearby, create new experiences, and much more!
+The perfect app for creating new travel adventures whether a weekend getaway or long international trip, App helps you meet other travelers nearby, create new experiences, and much more!
