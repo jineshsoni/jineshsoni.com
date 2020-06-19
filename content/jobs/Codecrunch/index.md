@@ -3,7 +3,7 @@ date: '2016-04-01'
 title: 'Software Engineer'
 company: 'CodeCrunch Techlabs'
 location: 'Ahmedabad, In'
-range: 'April 2015 - Dec 2016'
+range: 'April 2016 - Dec 2017'
 url: 'https://codecrunch.co/'
 ---
 

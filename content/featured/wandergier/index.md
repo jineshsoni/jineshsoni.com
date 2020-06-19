@@ -1,16 +1,15 @@
 ---
-date: '2019-09-12'
-title: 'Wandergier'
+date: '3'
+title: 'wandergier.com'
+cover: './demo.png'
 github: ''
-external: 'https"//wandergier.com'
-android: 'https://play.google.com/store/apps/details?id=com.wandergier'
+external: 'https://www.wandergier.com/'
 tech:
   - Kotlin
-  - Kotlin coroutine
+  - Dagger2
   - MVVM
-  - RxKoltin
-company: 'thinkwik'
-showInProjects: false
+  - Retrofit2
+showInProjects: true
 ---
 
 The perfect app for creating new travel adventures whether a weekend getaway or long international trip, App helps you meet other travelers nearby, create new experiences, and much more!

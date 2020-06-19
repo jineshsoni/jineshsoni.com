@@ -10,7 +10,7 @@ tech:
   - RxKotlin
   - Retrofit2
   - Viewmodel
-company: ''
+company: 'freelance'
 showInProjects: true
 ---
 

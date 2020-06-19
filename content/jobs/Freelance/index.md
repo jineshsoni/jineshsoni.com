@@ -1,13 +1,13 @@
 ---
 date: '2018-12-03'
-title: 'Android Developer'
-company: 'Bowstring Studio'
-location: 'New Delhi, IN'
-range: 'Dec 2017 - Present'
-url: 'http://bowstringstudio.in/'
+title: 'Android & Flutter Developer'
+company: 'Freelancer'
+location: 'Ahmedabad, In'
+range: 'Sept 2019 - Present'
+url: ''
 ---
 
-Responsible for coordinating within team and clients, and delivering excellent products
+Responsible for coordinating with team and clients, and delivering excellent products
 
 - Write modern, performant, maintainable code for a diverse array of client and internal projects
 - Following Agile development approach to deliver world class product
