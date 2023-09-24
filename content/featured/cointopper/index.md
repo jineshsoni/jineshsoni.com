@@ -1,5 +1,5 @@
 ---
-date: '1'
+date: '3'
 title: 'Cointopper'
 cover: './demo.png'
 github: ''
@@ -8,6 +8,7 @@ tech:
   - Kotlin
   - MVP
   - RxJava
+  - Web3
 showInProjects: true
 ---
 
