@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://jineshsoni.com/sitemap.xml
+Host: https://jineshsoni.com
