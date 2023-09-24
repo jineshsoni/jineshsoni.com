@@ -9,7 +9,9 @@ url: 'https://www.bijak.in/'
 
 Responsible for coordinating with teams, and delivering excellent products
 
-- Write modern, performant, maintainable code for a diverse array of client and internal projects
+- Managing & mentoring team to deliver desired output
+- Analyzing & executing requirements from product and marketing teams
+- Monitering & applying corrective measures to ensure app stability and smooth operations
 - Following Agile development approach to deliver world class product
 - Communicate with multi-disciplinary teams of engineers, designers, product, marketing on a daily basis
 - Working with continous delivery and continous integration (codemagic)
