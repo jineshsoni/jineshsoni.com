@@ -3,7 +3,7 @@ date: '2018-12-04'
 title: 'Team lead | Mobile Developer'
 company: 'Bijak'
 location: 'Gurugram / Ahmedabad, In'
-range: 'July 2022 - Present'
+range: 'July 2020 - Present'
 url: 'https://www.bijak.in/'
 ---
 

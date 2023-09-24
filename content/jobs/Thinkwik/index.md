@@ -3,7 +3,7 @@ date: '2018-12-03'
 title: 'Team lead | Android, Flutter Developer'
 company: 'Thinkwik'
 location: 'Ahmedabad, IN'
-range: 'Dec 2018 - July 2022'
+range: 'Dec 2018 - July 2020'
 url: 'https://www.thinkwik.com/'
 ---
 
