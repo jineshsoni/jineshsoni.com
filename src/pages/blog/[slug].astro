@@ -1,0 +1,97 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+import { formatDate, getPosts, readingTime } from '@/lib/content';
+import { SITE } from '@/consts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const url = `${SITE.url}/blog/${post.id}/`;
+
+const schema = [
+  {
+    '@type': 'BlogPosting',
+    headline: d.title,
+    description: d.description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: d.pubDate.toISOString(),
+    dateModified: (d.updatedDate ?? d.pubDate).toISOString(),
+    keywords: d.tags.join(', '),
+    image: `${SITE.url}/og/blog/${post.id}.png`,
+    author: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': `${SITE.url}/#person` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE.url}/blog/` },
+      { '@type': 'ListItem', position: 3, name: d.title, item: url },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={d.title}
+  description={d.description}
+  type="article"
+  publishedTime={d.pubDate}
+  modifiedTime={d.updatedDate}
+  noindex={d.draft}
+  schema={schema}
+>
+  <article class="container-page max-w-3xl pt-36 pb-16 sm:pt-44">
+    <a href="/blog/" class="inline-flex items-center gap-2 text-sm text-muted hover:text-ink">
+      <Icon name="arrow-left" class="size-4" /> All posts
+    </a>
+    <header class="mt-8">
+      <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-muted">
+        <time datetime={d.pubDate.toISOString()}>{formatDate(d.pubDate)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readingTime(post)} min read</span>
+        {d.draft && <span class="chip">draft</span>}
+      </div>
+      <h1 class="mt-4 text-[clamp(2.6rem,6vw,4.25rem)] leading-[1]">{d.title}</h1>
+      <p class="mt-5 text-xl text-ink-soft">{d.description}</p>
+      {d.tags.length > 0 && (
+        <ul class="mt-6 flex flex-wrap gap-1.5">
+          {d.tags.map((t) => (
+            <li class="chip">#{t}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    {d.cover && (
+      <Image
+        src={d.cover}
+        alt={d.coverAlt ?? ''}
+        widths={[640, 960, 1280]}
+        sizes="(min-width: 768px) 720px, 92vw"
+        class="mt-10 w-full rounded-2xl border border-line"
+        loading="eager"
+      />
+    )}
+
+    <div class="prose prose-lg mt-12 max-w-none prose-neutral prose-headings:text-ink prose-h2:font-serif prose-h2:text-4xl prose-h2:font-normal prose-h3:font-semibold prose-p:text-ink-soft prose-a:text-ink prose-a:decoration-line prose-a:underline-offset-4 hover:prose-a:decoration-ink prose-pre:rounded-2xl prose-pre:border prose-pre:border-line prose-code:before:content-none prose-code:after:content-none">
+      <Content />
+    </div>
+
+    <footer class="mt-16 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-card p-6">
+      <p class="font-serif text-2xl">Enjoyed this? Let’s talk Flutter & AI.</p>
+      <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(d.title)}`} class="btn-primary">
+        <Icon name="mail" class="size-4" /> Email me
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

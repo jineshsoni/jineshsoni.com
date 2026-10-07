@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+  index?: number;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { entry, index = 0, headingLevel: H = 'h3' } = Astro.props;
+const d = entry.data;
+const href = `/work/${entry.id}/`;
+const screens = d.screens.slice(0, 3);
+const flip = index % 2 === 1;
+---
+
+<article
+  class="reveal group card relative isolate grid overflow-hidden transition duration-500 ease-out-expo hover:border-ink/30 hover:shadow-[0_24px_48px_-32px_rgb(0_0_0/0.35)] lg:grid-cols-2"
+  style={`--brand:${d.brand}`}
+>
+  <div class:list={['flex flex-col justify-between gap-10 p-8 sm:p-10', flip && 'lg:order-2']}>
+    <div>
+      <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+        {d.icon && (
+          <Image
+            src={d.icon}
+            alt=""
+            width={28}
+            height={28}
+            densities={[1, 2]}
+            class="size-7 rounded-lg border border-line"
+          />
+        )}
+        <span>{d.role}</span>
+        <span aria-hidden="true">·</span>
+        <span>{d.period}</span>
+      </p>
+      <H class="mt-6 font-serif text-5xl font-normal tracking-[-0.015em]">
+        <a href={href} class="after:absolute after:inset-0 after:z-10">
+          {d.title}
+        </a>
+      </H>
+      <p class="mt-4 text-lg leading-relaxed text-ink-soft">{d.tagline}</p>
+    </div>
+
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      {d.stats.length > 0 && (
+        <dl class="flex gap-8">
+          {d.stats.slice(0, 2).map((s) => (
+            <div class="flex flex-col-reverse">
+              <dt class="max-w-[10rem] text-xs leading-snug text-muted">{s.label}</dt>
+              <dd class="stat text-3xl">{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      <span class="inline-flex items-center gap-1.5 text-sm font-medium">
+        Read case study{' '}
+        <Icon name="arrow-right" class="size-4 transition-transform group-hover:translate-x-1" />
+      </span>
+    </div>
+  </div>
+
+  <div class="relative flex min-h-72 items-end justify-center overflow-hidden px-6 pt-10 [background:color-mix(in_oklab,var(--brand)_16%,var(--color-paper))]">
+    {screens.length > 0 ? (
+      <div class="flex translate-y-6 items-end gap-3 transition-transform duration-700 ease-out-expo group-hover:translate-y-3">
+        {screens.map((s, i) => (
+          <Image
+            src={s.src}
+            alt={s.alt}
+            widths={[220, 330]}
+            sizes="(min-width: 1024px) 170px, 28vw"
+            class:list={[
+              'w-[28%] max-w-[170px] rounded-2xl border-4 border-ink shadow-xl',
+              i === 1 && '-translate-y-5',
+            ]}
+          />
+        ))}
+      </div>
+    ) : (
+      d.website && (
+        <Image
+          src={d.website.src}
+          alt={d.website.alt}
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 560px, 92vw"
+          class="w-full translate-y-6 rounded-t-xl border border-b-0 border-ink/10 shadow-xl transition-transform duration-700 ease-out-expo group-hover:translate-y-3"
+        />
+      )
+    )}
+  </div>
+</article>

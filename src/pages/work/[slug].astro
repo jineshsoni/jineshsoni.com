@@ -1,0 +1,238 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import { getWork } from '@/lib/content';
+import { SITE } from '@/consts';
+
+export async function getStaticPaths() {
+  const work = await getWork();
+  return work.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, next: work[(i + 1) % work.length] },
+  }));
+}
+
+const { entry, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const url = `${SITE.url}/work/${entry.id}/`;
+
+const links = [
+  d.links.website && { href: d.links.website, label: 'Website', icon: 'globe' as const },
+  d.links.playStore && {
+    href: d.links.playStore,
+    label: 'Google Play',
+    icon: 'google-play' as const,
+  },
+  d.links.appStore && { href: d.links.appStore, label: 'App Store', icon: 'apple' as const },
+].filter((l) => !!l);
+
+const isMobileApp = d.platforms.some((p) => p === 'Android' || p === 'iOS');
+
+const schema = [
+  {
+    '@type': isMobileApp ? 'MobileApplication' : 'SoftwareApplication',
+    name: d.title,
+    description: d.summary,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: d.platforms.join(', '),
+    url: d.links.website ?? url,
+    ...(d.links.playStore || d.links.appStore
+      ? { installUrl: d.links.appStore ?? d.links.playStore }
+      : {}),
+    author: { '@id': `${SITE.url}/#person` },
+  },
+  {
+    '@type': 'Article',
+    headline: `${d.title} — case study`,
+    description: d.summary,
+    url,
+    author: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': `${SITE.url}/#person` },
+    image: `${SITE.url}/og/work/${entry.id}.png`,
+    mainEntityOfPage: url,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Work', item: `${SITE.url}/work/` },
+      { '@type': 'ListItem', position: 3, name: d.title, item: url },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`${d.title} — case study`}
+  description={d.summary}
+  type="article"
+  schema={schema}
+>
+  <article style={`--brand:${d.brand}`}>
+    <header class="pt-32 sm:pt-40">
+      <div class="container-page">
+        <nav aria-label="Breadcrumb" class="text-sm text-muted">
+          <ol class="flex items-center gap-2">
+            <li>
+              <a href="/" class="hover:text-ink">
+                Home
+              </a>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li>
+              <a href="/work/" class="hover:text-ink">
+                Work
+              </a>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" class="text-ink">
+              {d.title}
+            </li>
+          </ol>
+        </nav>
+
+        <div class="mt-10 flex items-center gap-3 text-sm text-muted">
+          {d.icon && (
+            <Image
+              src={d.icon}
+              alt=""
+              width={40}
+              height={40}
+              densities={[1, 2]}
+              class="size-10 rounded-xl border border-line"
+              loading="eager"
+            />
+          )}
+          <span>{d.company}</span>
+        </div>
+        <h1 class="mt-6 max-w-4xl text-[clamp(3.2rem,8vw,6rem)] leading-[0.95]">{d.title}</h1>
+        <p class="mt-6 max-w-2xl text-xl leading-relaxed text-ink-soft">{d.tagline}</p>
+
+        <div class="mt-16 grid gap-12 border-t border-line pt-10 lg:grid-cols-[1fr_20rem]">
+          <figure>
+            <p class="eyebrow">The tension</p>
+            <blockquote class="mt-4 border-l-2 border-[var(--brand)] pl-6 font-serif text-[clamp(1.6rem,3vw,2.25rem)] leading-snug italic">
+              {d.tension}
+            </blockquote>
+          </figure>
+          <dl class="grid gap-5 text-sm">
+            <div>
+              <dt class="text-muted">Role</dt>
+              <dd class="mt-1 font-medium">
+                {d.role} · {d.period}
+              </dd>
+            </div>
+            <div>
+              <dt class="text-muted">What I owned</dt>
+              <dd class="mt-1 leading-relaxed text-ink-soft">{d.scope}</dd>
+            </div>
+            <div>
+              <dt class="text-muted">Platforms</dt>
+              <dd class="mt-1">{d.platforms.join(' · ')}</dd>
+            </div>
+            {links.length > 0 && (
+              <div>
+                <dt class="text-muted">Links</dt>
+                <dd class="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                  {links.map((l) => (
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener"
+                      class="link inline-flex items-center gap-1.5"
+                    >
+                      <Icon name={l.icon} class="size-3.5" /> {l.label}
+                    </a>
+                  ))}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </div>
+
+        {d.stats.length > 0 && (
+          <dl class="mt-12 grid border-y border-line sm:grid-cols-3">
+            {d.stats.map((s, i) => (
+              <div
+                class:list={[
+                  'flex flex-col-reverse gap-1 py-6',
+                  i > 0 && 'max-sm:border-t max-sm:border-line sm:border-l sm:border-line sm:pl-6',
+                ]}
+              >
+                <dt class="text-sm text-muted">{s.label}</dt>
+                <dd class="stat text-4xl">{s.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+      </div>
+    </header>
+
+    {d.screens.length > 0 && (
+      <section aria-label={`${d.title} screenshots`} class="mt-16">
+        <ul class="container-page flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:thin]">
+          {d.screens.map((s) => (
+            <li class="w-[62%] shrink-0 snap-start sm:w-[34%] lg:w-[23%]">
+              <Image
+                src={s.src}
+                alt={s.alt}
+                widths={[280, 420, 560]}
+                sizes="(min-width: 1024px) 270px, (min-width: 640px) 34vw, 62vw"
+                class="aspect-[9/16] w-full rounded-2xl border border-line object-cover object-top"
+                loading="lazy"
+              />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {d.website && (
+      <figure class="container-page mt-12">
+        <div class="overflow-hidden rounded-2xl border border-line bg-card">
+          <div class="flex items-center gap-1.5 border-b border-line px-4 py-3" aria-hidden="true">
+            <span class="size-2.5 rounded-full bg-line" />
+            <span class="size-2.5 rounded-full bg-line" />
+            <span class="size-2.5 rounded-full bg-line" />
+          </div>
+          <Image
+            src={d.website.src}
+            alt={d.website.alt}
+            widths={[640, 960, 1280, 1600]}
+            sizes="(min-width: 1152px) 1088px, 92vw"
+            class="w-full"
+          />
+        </div>
+      </figure>
+    )}
+
+    <div class="container-page grid gap-16 py-20 lg:grid-cols-[1fr_16rem]">
+      <div class="prose prose-lg max-w-[44rem] prose-neutral prose-headings:text-ink prose-h2:mt-16 prose-h2:mb-6 prose-h2:font-serif prose-h2:text-5xl prose-h2:font-normal prose-h2:tracking-[-0.015em] prose-h3:mt-12 prose-h3:text-xl prose-h3:font-semibold prose-p:text-ink-soft prose-a:text-ink prose-a:decoration-line prose-a:underline-offset-4 hover:prose-a:decoration-ink prose-strong:font-semibold prose-strong:text-ink prose-li:text-ink-soft prose-li:marker:text-muted">
+        <Content />
+      </div>
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <p class="eyebrow">Built with</p>
+        <p class="mt-3 text-sm leading-relaxed text-ink-soft">{d.tech.join(' · ')}</p>
+        <a
+          href={`mailto:${SITE.email}?subject=${encodeURIComponent(`About ${d.title}`)}`}
+          class="btn-ghost mt-8 w-full"
+        >
+          <Icon name="mail" class="size-4" /> Ask me about this
+        </a>
+      </aside>
+    </div>
+  </article>
+
+  {next.id !== entry.id && (
+    <section class="container-page" aria-labelledby="next-title">
+      <p id="next-title" class="eyebrow mb-6">
+        Next case study
+      </p>
+      <WorkCard entry={next} />
+    </section>
+  )}
+</BaseLayout>

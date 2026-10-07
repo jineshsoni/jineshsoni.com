@@ -1,0 +1,115 @@
+[
+  {
+    "id": "appexert",
+    "company": "AppExert",
+    "tagline": "Remote engineering teams for product companies.",
+    "url": "https://appexert.com",
+    "role": "Principal Developer",
+    "location": "Remote",
+    "start": "Nov 2024",
+    "end": "Present",
+    "summary": "Leading architecture and delivery of Readable English — a cross-platform Flutter reading app with on-device speech recognition and AI-generated learning content.",
+    "highlights": [
+      "Architected and led the Flutter app across iOS, Android and Web.",
+      "Shipped fully on-device speech recognition with sherpa-onnx on all three platforms, using a memory-optimised local model for fast STT.",
+      "Developed a text-matching algorithm that accurately detects which words of a passage have been spoken, powering real-time reading feedback.",
+      "Built multiple games on this engine for decoding, vocabulary building and fluency (Falling Words, Vocab Vault, Space Race).",
+      "Set up an AI pipeline that generates app content matched to each learner’s Lexile and reading grade level.",
+      "Wired up Firebase Remote Config, Analytics and Crashlytics, and shipped in-app subscriptions."
+    ],
+    "tech": [
+      "Flutter",
+      "Dart",
+      "sherpa-onnx",
+      "On-device STT",
+      "AI content pipeline",
+      "BLoC",
+      "GetX",
+      "Firebase",
+      "In-App Purchases"
+    ]
+  },
+  {
+    "id": "bijak",
+    "company": "Bijak (Krishiacharya Technologies)",
+    "tagline": "India’s B2B agri-trade marketplace for mandi traders.",
+    "url": "https://bijak.in",
+    "role": "Engineering Lead",
+    "location": "Gurugram, India · Remote",
+    "start": "Jul 2020",
+    "end": "Oct 2024",
+    "summary": "Involved from day one — led Bijak’s move from native to Flutter and a team of 8 building the Bijak app and the Just Fresh family of apps.",
+    "highlights": [
+      "Led the migration from native Android to Flutter while continuing to ship features.",
+      "Built B2B (Bijak) and D2C (Just Fresh) products end-to-end — 600K+ downloads combined.",
+      "Chose Flutter 3 with GetX and MVVM to build fast with a consistent architecture.",
+      "Led a team of 8 engineers, coordinating with design, product and marketing.",
+      "Built the Just Fresh apps — customer, delivery & logistics and warehouse admin — with 80% shared code.",
+      "Automated build, test and release with CI/CD (Codemagic).",
+      "Integrated analytics and engagement tooling (Segment, MoEngage, Branch) to measure and optimise funnels.",
+      "Trained TensorFlow models and introduced Gen AI tooling to cut manual work in internal processes."
+    ],
+    "tech": [
+      "Flutter",
+      "GetX",
+      "MVVM",
+      "Codemagic",
+      "TensorFlow",
+      "Gen AI",
+      "MoEngage",
+      "Branch.io"
+    ]
+  },
+  {
+    "id": "thinkwik",
+    "company": "Thinkwik",
+    "tagline": "Product studio building apps for clients worldwide.",
+    "url": "https://www.thinkwik.com",
+    "role": "Team Lead — Android & Flutter",
+    "location": "Ahmedabad, India",
+    "start": "Dec 2018",
+    "end": "Jul 2020",
+    "summary": "Led the mobile team delivering client apps across healthcare, travel, sports and agriculture.",
+    "highlights": [
+      "Led a mobile team through the full SDLC to deliver production-grade apps.",
+      "Gathered user feedback and app-acceptance research to make new and existing apps easier to use.",
+      "Championed a Kotlin-only codebase with MVVM architecture.",
+      "Shipped apps including Roche Kibo, Wandergier, Footy Addicts and Agrodei."
+    ],
+    "tech": ["Kotlin", "MVVM", "Flutter", "Coroutines", "Dagger2"]
+  },
+  {
+    "id": "codecrunch",
+    "company": "CodeCrunch TechLabs",
+    "tagline": "Ahmedabad product lab behind Studentdesk and CoinTopper.",
+    "url": "https://codecrunch.co",
+    "role": "Software Engineer",
+    "location": "Ahmedabad, India",
+    "start": "Apr 2016",
+    "end": "Dec 2018",
+    "summary": "Built the company’s flagship products Studentdesk.in and CoinTopper, plus a string of client apps.",
+    "highlights": [
+      "Developed Studentdesk.in and the CoinTopper real-time crypto tracker.",
+      "Used test-driven development to refine products.",
+      "Scaled apps to handle 10,000+ daily active users.",
+      "Applied Material Design and a hybrid Kotlin/Java MVP architecture."
+    ],
+    "tech": ["Kotlin", "Java", "RxJava", "MVP", "DBFlow"]
+  },
+  {
+    "id": "eswasthya",
+    "company": "eSwasthya Mediserve",
+    "tagline": "Online pharmacy and wellness delivery.",
+    "url": "https://eswasthya.in",
+    "role": "Android Developer",
+    "location": "Ahmedabad, India",
+    "start": "Jul 2014",
+    "end": "Mar 2016",
+    "summary": "First engineering role — designed and built the pharmacy-delivery app and its order-processing backend.",
+    "highlights": [
+      "Drafted, designed and developed the Android app.",
+      "Designed the backend system for order processing."
+    ],
+    "tech": ["Java", "Android"]
+  }
+]

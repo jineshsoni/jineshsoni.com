@@ -1,0 +1,110 @@
+---
+import { SITE, SOCIALS } from '@/consts';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute or root-relative OG image path. Defaults to a per-route generated card. */
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  noindex?: boolean;
+  /** Extra JSON-LD nodes merged into the page @graph. */
+  schema?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = SITE.description,
+  image,
+  imageAlt,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+  schema = [],
+} = Astro.props;
+
+const fullTitle = title ? `${title} · ${SITE.name}` : SITE.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// /work/bijak/ → /og/work/bijak.png ; / → /og/index.png
+const ogPath = Astro.url.pathname === '/' ? 'index' : Astro.url.pathname.replace(/^\/|\/$/g, '');
+const ogImage = new URL(image ?? `/og/${ogPath}.png`, Astro.site);
+
+const person = {
+  '@type': 'Person',
+  '@id': `${SITE.url}/#person`,
+  name: SITE.name,
+  url: SITE.url,
+  image: `${SITE.url}/og/index.png`,
+  email: `mailto:${SITE.email}`,
+  jobTitle: SITE.jobTitle,
+  worksFor: { '@type': 'Organization', name: SITE.company.name, url: SITE.company.url },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'Gujarat Technological University' },
+  address: { '@type': 'PostalAddress', addressCountry: 'IN' },
+  knowsAbout: [
+    'AI architecture',
+    'On-device AI',
+    'Speech recognition',
+    'Generative AI',
+    'Retrieval-augmented generation',
+    'AI agents',
+    'LangChain',
+    'Flutter',
+    'Android',
+    'Mobile app architecture',
+    'Engineering leadership',
+  ],
+  sameAs: SOCIALS.map((s) => s.url),
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.name,
+  description: SITE.description,
+  publisher: { '@id': `${SITE.url}/#person` },
+  inLanguage: 'en',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [person, website, ...schema],
+};
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="author" content={SITE.name} />
+{noindex ? (
+  <meta name="robots" content="noindex, follow" />
+) : (
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+)}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={title ?? SITE.title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt ?? fullTitle} />
+<meta property="og:locale" content="en_IN" />
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={SITE.twitter} />
+<meta name="twitter:creator" content={SITE.twitter} />
+<meta name="twitter:title" content={title ?? SITE.title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />

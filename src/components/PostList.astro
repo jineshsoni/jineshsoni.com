@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { formatDate, readingTime } from '@/lib/content';
+
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+}
+const { posts } = Astro.props;
+---
+
+<ul class="divide-y divide-line border-y border-line">
+  {posts.map((p) => (
+    <li class="reveal">
+      <a
+        href={`/blog/${p.id}/`}
+        class="group grid gap-2 py-7 sm:grid-cols-[9rem_1fr_auto] sm:items-baseline sm:gap-8"
+      >
+        <time datetime={p.data.pubDate.toISOString()} class="font-mono text-xs text-muted">
+          {formatDate(p.data.pubDate)}
+        </time>
+        <div>
+          <h3 class="font-serif text-3xl font-normal tracking-normal transition-colors group-hover:text-accent">
+            {p.data.draft && <span class="chip mr-2 align-middle">draft</span>}
+            {p.data.title}
+          </h3>
+          <p class="mt-2 text-ink-soft">{p.data.description}</p>
+        </div>
+        <span class="inline-flex items-center gap-1 text-sm text-muted">
+          {readingTime(p)} min
+          <Icon
+            name="arrow-up-right"
+            class="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>

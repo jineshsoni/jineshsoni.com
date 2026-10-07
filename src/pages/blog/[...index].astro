@@ -1,0 +1,71 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostList from '@/components/PostList.astro';
+import Icon from '@/components/Icon.astro';
+import { getPosts } from '@/lib/content';
+import { BLOG_ENABLED, SITE } from '@/consts';
+
+export function getStaticPaths() {
+  return BLOG_ENABLED ? [{ params: { index: undefined } }] : [];
+}
+
+const posts = await getPosts();
+
+const schema = [
+  {
+    '@type': 'Blog',
+    url: `${SITE.url}/blog/`,
+    name: `${SITE.name} — Blog`,
+    author: { '@id': `${SITE.url}/#person` },
+    blogPost: posts.map((p) => ({
+      '@type': 'BlogPosting',
+      headline: p.data.title,
+      url: `${SITE.url}/blog/${p.id}/`,
+      datePublished: p.data.pubDate.toISOString(),
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Notes on Flutter, mobile architecture, on-device AI and leading engineering teams — by Jinesh Soni."
+  schema={schema}
+>
+  <section class="container-page pt-36 pb-24 sm:pt-44">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="eyebrow">Blog</p>
+        <h1 class="mt-4 max-w-3xl text-[clamp(2.8rem,7vw,5.5rem)] leading-[0.95]">
+          Notes from <em>the build</em>.
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+          Flutter, mobile architecture, on-device AI and what I learn leading engineering teams.
+        </p>
+      </div>
+      <a href="/rss.xml" class="btn-ghost">
+        <Icon name="rss" class="size-4" /> RSS feed
+      </a>
+    </div>
+
+    <div class="mt-16">
+      {posts.length > 0 ? (
+        <PostList posts={posts} />
+      ) : (
+        <div class="card grid place-items-center gap-3 px-6 py-20 text-center">
+          <span class="text-4xl" aria-hidden="true">
+            ✍️
+          </span>
+          <p class="font-serif text-3xl">First posts are on the way.</p>
+          <p class="max-w-md text-ink-soft">
+            Subscribe via{' '}
+            <a href="/rss.xml" class="font-medium text-accent underline underline-offset-4">
+              RSS
+            </a>{' '}
+            to catch them when they land.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

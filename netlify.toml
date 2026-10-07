@@ -1,0 +1,61 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Real 301s for old Gatsby URLs (Astro also emits meta-refresh pages as a fallback).
+[[redirects]]
+  from = "/pensieve/*"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pensieve"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/resume.pdf"
+  to = "/Jinesh-Soni-Resume.pdf"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/archive"
+  to = "/work/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/"
+  status = 302
+
+# Hashed build assets never change — cache them for a year.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# The old site's service worker must never be cached, so the kill-switch in sw.js is picked up.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

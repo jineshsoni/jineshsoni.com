@@ -1,0 +1,319 @@
+---
+// Single-column, ATS-friendly résumé. The same markup is printed to the downloadable PDF
+// (`npm run resume:pdf`), so keep it plain: real text, standard headings, no columns.
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+import { getWork } from '@/lib/content';
+import { SKILLS } from '@/data/skills';
+import { SITE, CAREER_START, yearsSince } from '@/consts';
+
+const startOf = (s: string) => new Date(`1 ${s}`).getTime();
+const jobs = (await getCollection('jobs')).sort(
+  (a, b) => startOf(b.data.start) - startOf(a.data.start),
+);
+const work = await getWork();
+const years = yearsSince(CAREER_START);
+
+// ATS parsers handle straight quotes more reliably than typographic ones.
+const plain = (t: string) => t.replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
+
+const achievements = [
+  '600K+ downloads across Bijak and Just Fresh Flutter apps, built and led end-to-end.',
+  'Shipped on-device speech recognition (sherpa-onnx) on iOS, Android and Web, with a custom text-matching engine for real-time reading feedback.',
+  'Led a team of 8 engineers through a native-to-Flutter migration while continuing to ship features.',
+  'Architected three Just Fresh apps (customer, delivery & logistics, warehouse admin) on one Flutter codebase with 80% shared code.',
+];
+
+const contact = [
+  { label: SITE.email, href: `mailto:${SITE.email}` },
+  { label: SITE.phone, printOnly: true },
+  { label: 'linkedin.com/in/jineshsoni', href: 'https://www.linkedin.com/in/jineshsoni' },
+  { label: 'github.com/jineshsoni', href: 'https://github.com/jineshsoni' },
+  { label: 'jineshsoni.com', href: SITE.url },
+  { label: SITE.location },
+];
+
+const schema = [
+  {
+    '@type': 'WebPage',
+    url: `${SITE.url}/resume/`,
+    name: `Résumé — ${SITE.name}`,
+    about: { '@id': `${SITE.url}/#person` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+  },
+];
+---
+
+<BaseLayout
+  title="Résumé"
+  description={`Résumé of Jinesh Soni — Principal Developer with ${years}+ years in Flutter, Android and mobile engineering leadership, now building on-device and generative AI.`}
+  schema={schema}
+>
+  <article class="resume container-prose pt-32 pb-12 sm:pt-40">
+    <div class="mb-10 flex flex-wrap items-center justify-between gap-4 print:hidden">
+      <p class="eyebrow">Résumé</p>
+      <div class="flex gap-2">
+        <a href={SITE.resumePdf} class="btn-primary" download>
+          <Icon name="download" class="size-4" /> Download PDF
+        </a>
+        <button type="button" class="btn-ghost" onclick="window.print()">
+          Print
+        </button>
+      </div>
+    </div>
+
+    <header class="border-b border-line pb-8">
+      <h1 class="text-[clamp(2.75rem,6vw,4rem)] leading-none">{SITE.name}</h1>
+      <p class="r-headline mt-3 text-lg font-medium text-ink">
+        Principal Developer | AI & Mobile Engineer
+      </p>
+      <p class="r-contact mt-3 flex flex-wrap gap-y-1 text-sm text-ink-soft">
+        {contact.map((c, i) => (
+          <span class:list={['whitespace-nowrap', c.printOnly && 'hidden print:inline']}>
+            {i > 0 && (
+              <span
+                class:list={['px-1.5 text-muted', i === 1 && 'hidden print:inline']}
+                aria-hidden="true"
+              >
+                |
+              </span>
+            )}
+            {c.href ? (
+              <a href={c.href} class="hover:underline">
+                {c.label}
+              </a>
+            ) : (
+              c.label
+            )}
+          </span>
+        ))}
+      </p>
+    </header>
+
+    <section class="r-section" aria-labelledby="r-summary">
+      <h2 id="r-summary" class="r-h2">
+        Summary
+      </h2>
+      <p class="r-body">
+        Principal Developer and engineering lead with {years}+ years building mobile products, from
+        native Android to Flutter across iOS, Android and Web, with 600K+ downloads. Now focused on
+        AI in production: on-device speech recognition, word-level reading assessment and generative
+        content pipelines. Experienced in leading teams, setting architecture and shipping reliably.
+      </p>
+    </section>
+
+    <section class="r-section" aria-labelledby="r-ach">
+      <h2 id="r-ach" class="r-h2">
+        Key Achievements
+      </h2>
+      <ul class="r-list">
+        {achievements.map((a) => (
+          <li>{plain(a)}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="r-section" aria-labelledby="r-exp">
+      <h2 id="r-exp" class="r-h2">
+        Experience
+      </h2>
+      <div class="grid gap-7">
+        {jobs.map(({ data: j }) => (
+          <div class="r-job">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+              <h3 class="r-h3">
+                {j.role}, {j.company}
+              </h3>
+              <p class="r-meta text-sm text-ink-soft">
+                {j.start} – {j.end}
+              </p>
+            </div>
+            <p class="r-meta text-sm text-muted">
+              {j.location} | {plain(j.tagline)}
+            </p>
+            <ul class="r-list mt-2">
+              {j.highlights.map((h) => (
+                <li>{plain(h)}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="r-section" aria-labelledby="r-skills">
+      <h2 id="r-skills" class="r-h2">
+        Skills
+      </h2>
+      <ul class="grid gap-1.5">
+        {SKILLS.map((g) => (
+          <li class="r-body">
+            <strong class="font-semibold text-ink">{g.title}:</strong> {g.items.join(', ')}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="r-section" aria-labelledby="r-projects">
+      <h2 id="r-projects" class="r-h2">
+        Projects
+      </h2>
+      <ul class="grid gap-2">
+        {work.map((w) => (
+          <li class="r-body">
+            <strong class="font-semibold text-ink">
+              <a href={`${SITE.url}/work/${w.id}/`} class="hover:underline">
+                {w.data.title}
+              </a>
+            </strong>{' '}
+            ({w.data.period}): {plain(w.data.tagline)}{' '}
+            <span class="text-muted">Tech: {w.data.tech.slice(0, 6).join(', ')}.</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="r-section" aria-labelledby="r-edu">
+      <h2 id="r-edu" class="r-h2">
+        Education
+      </h2>
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+        <h3 class="r-h3">B.E. Computer Science, Gujarat Technological University</h3>
+        <p class="r-meta text-sm text-ink-soft">2010 – 2014</p>
+      </div>
+      <p class="r-body mt-1">Languages: English, Hindi</p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  /* ---------- Screen ---------- */
+  .resume .r-section {
+    border-bottom: 1px solid var(--color-line);
+    padding-block: 2rem;
+  }
+  .resume .r-section:last-child {
+    border-bottom: 0;
+  }
+  .resume .r-h2 {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    margin-bottom: 1rem;
+  }
+  .resume .r-h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .resume .r-body {
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+  .resume .r-list {
+    list-style: disc;
+    padding-left: 1.15rem;
+    color: var(--color-ink-soft);
+    line-height: 1.55;
+  }
+  .resume .r-list li + li {
+    margin-top: 0.3rem;
+  }
+  .resume .r-list li::marker {
+    color: var(--color-muted);
+  }
+
+  /* ---------- Print / PDF: one readable sans font, real point sizes, no ligatures ---------- */
+  @page {
+    size: A4;
+    margin: 12mm 15mm;
+  }
+  @media print {
+    header[data-header],
+    footer {
+      display: none !important;
+    }
+    html,
+    body {
+      background: #fff !important;
+    }
+    main {
+      padding: 0 !important;
+    }
+    .reveal {
+      animation: none !important;
+    }
+    .resume {
+      max-width: none !important;
+      padding: 0 !important;
+      font-family: var(--font-sans) !important;
+      font-size: 10pt;
+      line-height: 1.38;
+      color: #111 !important;
+      font-variant-ligatures: none;
+      font-feature-settings:
+        'liga' 0,
+        'calt' 0;
+    }
+    .resume * {
+      color: #111 !important;
+    }
+    .resume a {
+      text-decoration: none !important;
+    }
+    .resume h1 {
+      font-family: var(--font-sans) !important;
+      font-size: 22pt !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+    }
+    .resume .r-headline {
+      font-size: 12pt !important;
+      margin-top: 4pt !important;
+    }
+    .resume .r-contact {
+      font-size: 9.5pt !important;
+      margin-top: 4pt !important;
+    }
+    .resume header {
+      padding-bottom: 8pt !important;
+      border-bottom: 1px solid #999 !important;
+    }
+    .resume .r-section {
+      padding-block: 7pt !important;
+      border-bottom: 0 !important;
+    }
+    .resume .r-h2 {
+      font-size: 11pt !important;
+      letter-spacing: 0.06em !important;
+      margin-bottom: 5pt !important;
+      padding-bottom: 2pt;
+      border-bottom: 1px solid #ccc;
+    }
+    .resume .r-h3 {
+      font-size: 11pt !important;
+    }
+    .resume .r-meta {
+      font-size: 9.5pt !important;
+      color: #444 !important;
+    }
+    .resume .r-body,
+    .resume .r-list {
+      font-size: 10pt !important;
+      line-height: 1.38 !important;
+    }
+    .resume .r-list li + li {
+      margin-top: 1.5pt !important;
+    }
+    .resume .r-job {
+      break-inside: avoid;
+    }
+    .resume .grid {
+      gap: 5pt !important;
+    }
+  }
+</style>
