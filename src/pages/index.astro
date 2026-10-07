@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import Numbers from '@/components/home/Numbers.astro';
+import AiWork from '@/components/home/AiWork.astro';
+import Principles from '@/components/home/Principles.astro';
+import Experience from '@/components/home/Experience.astro';
+import Skills from '@/components/home/Skills.astro';
+import About from '@/components/home/About.astro';
+import Contact from '@/components/home/Contact.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import PostList from '@/components/PostList.astro';
+import Icon from '@/components/Icon.astro';
+import { getPosts, getWork } from '@/lib/content';
+import { SITE } from '@/consts';
+
+const work = await getWork();
+const featured = work.filter((w) => w.data.featured);
+const otherCount = work.length - featured.length + (await getCollection('projects')).length;
+const posts = (await getPosts()).slice(0, 3);
+
+const schema = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${SITE.url}/#profile`,
+    url: `${SITE.url}/`,
+    name: SITE.title,
+    mainEntity: { '@id': `${SITE.url}/#person` },
+    isPartOf: { '@id': `${SITE.url}/#website` },
+  },
+];
+---
+
+<BaseLayout type="profile" schema={schema}>
+  <Hero />
+  <Numbers />
+  <AiWork />
+
+  <section id="work" class="container-page py-28" aria-labelledby="work-title">
+    <SectionHeading
+      id="work-title"
+      eyebrow="Selected work"
+      title="Products where <em>AI meets the real world</em>."
+      lede="Each case study covers the tension at the heart of the project, the decisions I made, and what they cost — from on-device speech AI to Flutter apps with 600K+ downloads."
+    >
+      <a href="/work/" class="btn-ghost shrink-0">
+        All work <Icon name="arrow-right" class="size-4" />
+      </a>
+    </SectionHeading>
+    <div class="grid gap-6">
+      {featured.map((entry, i) => (
+        <WorkCard entry={entry} index={i} />
+      ))}
+    </div>
+    <a
+      href="/work/"
+      class="reveal group mt-6 flex flex-wrap items-center justify-between gap-4 border-y border-line py-6 transition-colors hover:border-ink"
+    >
+      <p class="text-ink-soft">
+        <span class="font-medium text-ink">+ {otherCount} more case studies & projects</span> —
+        CoinTopper, Wandergier, Roche Kibo, Studentdesk, open-source tools and more.
+      </p>
+      <span class="inline-flex items-center gap-1.5 text-sm font-medium">
+        Browse the archive{' '}
+        <Icon name="arrow-right" class="size-4 transition-transform group-hover:translate-x-1" />
+      </span>
+    </a>
+  </section>
+
+  <Principles />
+  <Experience />
+  <About />
+  <Skills />
+
+  {posts.length > 0 && (
+    <section id="writing" class="container-page py-28" aria-labelledby="writing-title">
+      <SectionHeading id="writing-title" eyebrow="Writing" title="Notes from <em>the build</em>.">
+        <a href="/blog/" class="btn-ghost shrink-0">
+          All posts <Icon name="arrow-right" class="size-4" />
+        </a>
+      </SectionHeading>
+      <PostList posts={posts} />
+    </section>
+  )}
+
+  <Contact />
+</BaseLayout>

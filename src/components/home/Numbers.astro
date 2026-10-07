@@ -1,0 +1,28 @@
+---
+import { CAREER_START, yearsSince } from '@/consts';
+
+const numbers = [
+  { value: '3', label: 'platforms running on-device speech AI' },
+  { value: '600K+', label: 'downloads across Bijak & Just Fresh, which I led' },
+  { value: `${yearsSince(CAREER_START)}+`, label: 'years shipping production software' },
+  { value: '8', label: 'engineers led at Bijak' },
+];
+---
+
+<section aria-label="By the numbers" class="border-y border-line">
+  <dl class="container-page grid grid-cols-2 lg:grid-cols-4">
+    {numbers.map((n, i) => (
+      <div
+        class:list={[
+          'flex flex-col-reverse justify-end gap-2 py-10 sm:px-6',
+          i % 2 === 1 && 'border-l border-line pl-6',
+          i >= 2 && 'max-lg:border-t max-lg:border-line',
+          i === 2 && 'lg:border-l lg:border-line lg:pl-6',
+        ]}
+      >
+        <dt class="text-sm text-muted">{n.label}</dt>
+        <dd class="stat text-5xl leading-none sm:text-6xl">{n.value}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/Icon.astro';
+---
+
+<BaseLayout title="Page not found" description="This page doesn’t exist." noindex>
+  <section class="container-page grid min-h-[80dvh] place-items-center pt-28 text-center">
+    <div>
+      <p class="font-serif text-[clamp(7rem,25vw,14rem)] leading-none">
+        4<em class="em">0</em>4
+      </p>
+      <h1 class="mt-2 text-4xl">This screen didn’t make it to production.</h1>
+      <p class="mx-auto mt-4 max-w-md text-ink-soft">
+        The page you’re looking for was moved, removed, or never shipped.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary">
+          <Icon name="arrow-left" class="size-4" /> Back home
+        </a>
+        <a href="/work/" class="btn-ghost">
+          See my work
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import me from '@/assets/me.jpg';
+---
+
+<section id="about" class="container-page py-28" aria-labelledby="about-title">
+  <div class="grid items-start gap-14 lg:grid-cols-[22rem_1fr]">
+    <figure class="reveal mx-auto w-full max-w-xs lg:sticky lg:top-28">
+      <Image
+        src={me}
+        alt="Portrait of Jinesh Soni"
+        widths={[320, 480, 640]}
+        sizes="(min-width: 1024px) 352px, 320px"
+        class="aspect-[4/5] w-full rounded-2xl object-cover"
+      />
+      <figcaption class="mt-3 text-sm text-muted">Based in India · works remotely</figcaption>
+    </figure>
+
+    <div class="reveal">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title" class="mt-4 text-[clamp(2.4rem,5vw,3.6rem)] leading-[1.02]">
+        I started by breaking my own phone. <em>Then I learned to build.</em>
+      </h2>
+      <div class="mt-8 max-w-2xl space-y-5 text-lg leading-relaxed text-ink-soft">
+        <p>
+          Around 2012, in university, I was{' '}
+          <strong class="font-medium text-ink">modding Android ROMs</strong> to squeeze more
+          performance out of my phone — and writing about it on my tech blog,{' '}
+          <a class="link" href="https://techcure.wordpress.com/" target="_blank" rel="noopener">
+            TechCure
+          </a>
+          . It grew to 400K+ visits and taught me Android and Java inside out. In 2014 I started
+          building apps professionally and never looked back.
+        </p>
+        <p>
+          Since then I’ve worked across healthcare, crypto, travel, agri-tech and ed-tech — first as
+          an Android engineer, then leading mobile teams, and today as Principal Developer at
+          AppExert, architecting an AI-powered reading app with on-device speech recognition.
+        </p>
+        <p>
+          The thread through all of it: apps for people who don’t have perfect conditions. Traders
+          on budget phones in busy mandis. Kids reading aloud in classrooms with flaky Wi-Fi. I like
+          the constraints — they make the engineering honest.
+        </p>
+        <p>
+          And increasingly, the work is AI. Not demos — AI that has to hold up in the same messy
+          conditions. At Readable English that meant running speech recognition{' '}
+          <strong class="font-medium text-ink">entirely on-device</strong> with sherpa-onnx across
+          iOS, Android and the web, writing the matching algorithm that turns a recogniser’s guesses
+          into word-accurate reading feedback, and building an AI pipeline that generates learning
+          content levelled to each reader’s Lexile and grade. At Bijak it was TensorFlow models and
+          Gen AI tooling that quietly took manual work off the operations team.
+        </p>
+        <p>
+          Next, I’m exploring where{' '}
+          <strong class="font-medium text-ink">agents, RAG and local LLMs</strong> fit into mobile
+          products — small models that run on the device, respect privacy, and keep working when the
+          network doesn’t.
+        </p>
+      </div>
+      <dl class="mt-10 grid max-w-2xl gap-6 border-t border-line pt-6 text-sm sm:grid-cols-2">
+        <div>
+          <dt class="text-muted">Education</dt>
+          <dd class="mt-1">B.E. Computer Science, Gujarat Technological University</dd>
+        </div>
+        <div>
+          <dt class="text-muted">Languages</dt>
+          <dd class="mt-1">English, Hindi</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>

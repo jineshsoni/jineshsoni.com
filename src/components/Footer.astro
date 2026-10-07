@@ -1,0 +1,46 @@
+---
+import { BLOG_ENABLED, NAV, SITE, SOCIALS } from '@/consts';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-line">
+  <div class="container-page flex flex-col gap-8 py-10 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="font-serif text-2xl">Jinesh Soni</p>
+      <p class="mt-1 text-sm text-muted">AI & mobile architect · {SITE.location}</p>
+    </div>
+    <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-soft">
+      {NAV.map((n) => (
+        <a href={n.href} class="hover:text-ink">
+          {n.label}
+        </a>
+      ))}
+      {BLOG_ENABLED && (
+        <a href="/rss.xml" class="inline-flex items-center gap-1 hover:text-ink">
+          <Icon name="rss" class="size-3.5" /> RSS
+        </a>
+      )}
+    </nav>
+    <ul class="flex gap-2">
+      {SOCIALS.map((s) => (
+        <li>
+          <a
+            href={s.url}
+            target="_blank"
+            rel="me noopener"
+            class="grid size-10 place-items-center rounded-full border border-line bg-card text-ink-soft transition hover:-translate-y-0.5 hover:border-ink hover:text-ink"
+          >
+            <Icon
+              name={s.name === 'GitHub' ? 'github' : s.name === 'LinkedIn' ? 'linkedin' : 'x'}
+              class="size-4"
+              label={s.name}
+            />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="container-page pb-8 font-mono text-xs text-muted">© {year} Jinesh Soni.</div>
+</footer>

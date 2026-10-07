@@ -1,0 +1,103 @@
+---
+import { NAV, SITE } from '@/consts';
+import Icon from './Icon.astro';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => !href.includes('#') && href !== '/' && path.startsWith(href);
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-paper/85 backdrop-blur-lg"
+  data-header
+>
+  <nav aria-label="Main" class="container-page flex h-16 items-center justify-between gap-4">
+    <a href="/" class="group flex items-center gap-2.5">
+      <span
+        aria-hidden="true"
+        class="grid size-8 place-items-center rounded-full bg-ink font-serif text-[15px] text-paper italic transition-transform duration-500 ease-out-expo group-hover:-rotate-12"
+      >
+        js
+      </span>
+      <span class="text-[15px] font-semibold tracking-tight">{SITE.name}</span>
+    </a>
+
+    <ul class="hidden items-center gap-7 md:flex">
+      {NAV.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              'text-sm transition-colors hover:text-ink',
+              isActive(item.href) ? 'font-medium text-ink' : 'text-muted',
+            ]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <a href="/#contact" class="btn-primary hidden !px-4 !py-2 sm:inline-flex">
+        Get in touch
+      </a>
+      <button
+        type="button"
+        class="grid size-10 place-items-center rounded-full md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <Icon name="menu" class="size-5" />
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-line bg-paper md:hidden" data-menu>
+    <ul class="container-page grid py-2">
+      {NAV.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="block border-b border-line py-4 font-serif text-2xl last:border-0"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a href="/#contact" class="block py-4 font-serif text-2xl italic text-accent">
+          Get in touch
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const menu = document.querySelector<HTMLElement>('[data-menu]');
+    if (!header || !toggle || !menu || toggle.dataset.bound) return;
+    toggle.dataset.bound = 'true';
+
+    const onScroll = () => header.classList.toggle('!border-line', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const set = (open: boolean) => {
+      menu.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    toggle.addEventListener('click', () => set(menu.classList.contains('hidden')));
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) set(false);
+    });
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+  }
+  document.addEventListener('astro:page-load', initHeader);
+</script>

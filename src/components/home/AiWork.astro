@@ -1,0 +1,54 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+import Icon from '@/components/Icon.astro';
+import { AI_EXPLORING, AI_SHIPPED } from '@/data/ai';
+---
+
+<section id="ai" class="container-page py-28" aria-labelledby="ai-title">
+  <SectionHeading
+    id="ai-title"
+    eyebrow="AI work"
+    title="AI I’ve shipped — <em>not just prototyped</em>."
+    lede="The hard part of AI isn’t the model. It’s everything around it: making it fast on a cheap phone, working offline, and turning a model’s guesses into something a person can trust."
+  />
+
+  <ul class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+    {AI_SHIPPED.map((item) => (
+      <li class="reveal bg-card">
+        <a
+          href={item.href}
+          class="group flex h-full flex-col gap-4 p-8 transition-colors hover:bg-paper"
+        >
+          <p class="flex items-center gap-2 text-xs text-muted">
+            <span class="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+            In production · {item.where}
+          </p>
+          <h3 class="font-serif text-3xl leading-tight font-normal tracking-normal">
+            {item.title}
+          </h3>
+          <p class="leading-relaxed text-ink-soft">{item.body}</p>
+          <span class="mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-medium">
+            Read the case study
+            <Icon
+              name="arrow-right"
+              class="size-4 transition-transform group-hover:translate-x-1"
+            />
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="reveal mt-6 flex flex-col gap-4 rounded-2xl border border-dashed border-line p-8 sm:flex-row sm:items-center sm:justify-between">
+    <div class="max-w-md">
+      <p class="eyebrow">Exploring now</p>
+      <p class="mt-2 text-ink-soft">
+        Small, private models inside real products — agents and retrieval that keep working on the
+        device.
+      </p>
+    </div>
+    <p class="text-sm leading-relaxed text-ink sm:max-w-xs sm:text-right">
+      {AI_EXPLORING.join(' · ')}
+    </p>
+  </div>
+</section>

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "car-gps-tracker",
+    "title": "Car GPS Tracker",
+    "year": 2023,
+    "description": "DIY car tracker — ESP32 + NEO-6M GPS hardware reporting to Firebase, with a Flutter app and Telegram alerts so you own your data.",
+    "tech": ["ESP32", "Arduino", "Firebase", "Flutter", "Telegram"]
+  },
+  {
+    "id": "ddns",
+    "title": "Cloudflare DDNS",
+    "year": 2023,
+    "description": "Use Cloudflare as your own dynamic DNS service.",
+    "tech": ["Python", "Cloudflare"],
+    "links": {
+      "github": "https://github.com/jineshsoni/ddnsupdate"
+    }
+  },
+  {
+    "id": "gosocial",
+    "title": "GoSocial",
+    "year": 2020,
+    "madeAt": "Freelance",
+    "description": "A home for creators — photographers, artists and writers — to find inspiration, contests and challenges set by experts.",
+    "tech": ["Kotlin", "MVP", "Retrofit2", "Glide"]
+  },
+  {
+    "id": "covid19india-flutter",
+    "title": "Covid19India Flutter",
+    "year": 2020,
+    "description": "Covid-19 tracker built in Flutter for Android and iOS, also shipped to the web.",
+    "tech": ["Flutter", "Flutter Web", "Provider", "Charts"],
+    "links": {
+      "github": "https://github.com/jineshsoni/covid19india",
+      "website": "https://jineshsoni.github.io/covid19india/"
+    }
+  },
+  {
+    "id": "covid19-heatmap",
+    "title": "Covid19India Heatmap",
+    "year": 2020,
+    "description": "Heatmap of confirmed cases across India built on data from covid19india.org, with a companion GeoJSON API in Dart.",
+    "tech": ["Mapbox", "GeoJSON", "Dart"],
+    "links": {
+      "github": "https://github.com/jineshsoni/covid19India-Heatmap",
+      "website": "https://jineshsoni.github.io/covid19India-Heatmap/"
+    }
+  },
+  {
+    "id": "mvvm-offline",
+    "title": "MVVM with Offline Cache",
+    "year": 2020,
+    "description": "Reference Android app showing trending GitHub repos with an offline-first MVVM architecture.",
+    "tech": ["Kotlin", "MVVM", "Dagger2", "Realm", "RxKotlin"],
+    "links": {
+      "github": "https://github.com/jineshsoni/MVVM-offline-cache-demo"
+    }
+  },
+  {
+    "id": "cle",
+    "title": "CLE Customer & Artist Apps",
+    "year": 2019,
+    "madeAt": "Freelance",
+    "description": "Two apps that let beauty artists schedule appointments and showcase their work to customers.",
+    "tech": ["Kotlin", "RxKotlin", "Retrofit2", "ViewModel"]
+  },
+  {
+    "id": "agrodei",
+    "title": "Agrodei",
+    "year": 2019,
+    "madeAt": "Thinkwik",
+    "description": "Social network to share, discover and connect with the world of agriculture in Spain.",
+    "tech": ["Kotlin", "MVP", "Location", "Airship"]
+  },
+  {
+    "id": "localization-generator",
+    "title": "Android/iOS Localization Generator",
+    "year": 2019,
+    "description": "Kotlin script that generates Android and iOS localisation strings from a Google Sheet.",
+    "tech": ["Kotlin"],
+    "links": {
+      "github": "https://github.com/jineshsoni/AndroidiOSLocalizationStringGenerator"
+    }
+  },
+  {
+    "id": "google-cloud-speech",
+    "title": "Cloud Speech-to-Text on Android",
+    "year": 2019,
+    "description": "Android demo converting recorded audio to text with Google Cloud Speech.",
+    "tech": ["Android", "Google Cloud Speech"],
+    "links": {
+      "github": "https://github.com/jineshsoni/GoogleCloudSpeechtoTextDemo"
+    }
+  },
+  {
+    "id": "roche-kibo",
+    "title": "Roche Kibo",
+    "year": 2019,
+    "madeAt": "Thinkwik",
+    "description": "Helps haemophilia patients track treatment, medication stock and appointments with their care team.",
+    "tech": ["Kotlin", "MVVM", "WorkManager"]
+  },
+  {
+    "id": "footy-addicts",
+    "title": "Footy Addicts",
+    "year": 2019,
+    "madeAt": "Thinkwik",
+    "description": "Social platform for football players to discover, organise and join games.",
+    "tech": ["Kotlin", "Java", "MVP", "Location"],
+    "links": {
+      "website": "https://footyaddicts.com/"
+    }
+  },
+  {
+    "id": "studentdesk",
+    "title": "Studentdesk",
+    "year": 2018,
+    "madeAt": "CodeCrunch",
+    "description": "Book-exchange platform for students to buy, sell, swap or rent used books within their school, college or city.",
+    "tech": ["Java", "MVP", "Retrofit2", "RxJava"]
+  },
+  {
+    "id": "kenect",
+    "title": "Kenect",
+    "year": 2018,
+    "madeAt": "CodeCrunch",
+    "description": "Social travel planner that connects travellers around the world.",
+    "tech": ["Java", "EventBus", "Retrofit2", "Location"]
+  },
+  {
+    "id": "bookflyps",
+    "title": "Bookflyps",
+    "year": 2017,
+    "madeAt": "CodeCrunch",
+    "description": "A social network for books — share quotes from the book in your hands as beautiful image cards, powered by OCR.",
+    "tech": ["Java", "OCR", "MVP", "Firebase"]
+  },
+  {
+    "id": "letsbook",
+    "title": "Letsbook",
+    "year": 2017,
+    "madeAt": "CodeCrunch",
+    "description": "Find serviced offices, coworking spaces and meeting rooms across the UAE.",
+    "tech": ["Java", "RxJava", "MVP", "DBFlow"]
+  },
+  {
+    "id": "noq",
+    "title": "noQ",
+    "year": 2017,
+    "madeAt": "CodeCrunch",
+    "description": "Join virtual queues at nearby businesses and track your live position and wait time.",
+    "tech": ["Java", "MVP", "Location", "Camera"]
+  },
+  {
+    "id": "eswasthya",
+    "title": "eSwasthya",
+    "year": 2015,
+    "madeAt": "eSwasthya",
+    "description": "Online pharmacy and wellness store — Android app plus the order-processing system behind it.",
+    "tech": ["Java", "Android", "Order processing"]
+  }
+]

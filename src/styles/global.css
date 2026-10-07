@@ -1,0 +1,134 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@import '@fontsource/instrument-serif/latin-400.css';
+@import '@fontsource/instrument-serif/latin-400-italic.css';
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
+
+/* Metric-matched fallbacks so headlines wrap the same before the webfont arrives (no layout shift). */
+@font-face {
+  font-family: 'Instrument Serif Fallback';
+  src: local('Times New Roman'), local('Times'), local('Liberation Serif');
+  size-adjust: 83.8%;
+}
+@font-face {
+  font-family: 'Instrument Serif Fallback Wide';
+  src: local('Georgia'), local('Noto Serif'), local('DejaVu Serif');
+  size-adjust: 76.1%;
+}
+
+@theme {
+  --font-serif:
+    'Instrument Serif', 'Instrument Serif Fallback', 'Instrument Serif Fallback Wide', serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, monospace;
+
+  --color-paper: #faf9f7;
+  --color-card: #ffffff;
+  --color-ink: #121214;
+  --color-ink-soft: #3d3d45;
+  --color-muted: #6b6b73;
+  --color-line: #e7e5e0;
+  --color-accent: #3f37c9;
+  --color-accent-soft: #eeedfb;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-accent-soft text-ink;
+  }
+  :focus-visible {
+    @apply outline-accent outline-2 outline-offset-2;
+  }
+  h1,
+  h2 {
+    @apply font-serif font-normal tracking-[-0.015em] text-balance;
+  }
+  h3,
+  h4 {
+    @apply font-semibold tracking-tight text-balance;
+  }
+  /* Editorial emphasis: italic serif in the accent colour. */
+  h1 em,
+  h2 em,
+  .em {
+    @apply text-accent font-serif italic;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+@utility container-prose {
+  @apply mx-auto w-full max-w-3xl px-4 sm:px-6;
+}
+@utility eyebrow {
+  @apply text-muted font-mono text-xs font-medium tracking-[0.16em] uppercase;
+}
+@utility btn {
+  @apply ease-out-expo inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium transition duration-300;
+}
+@utility btn-primary {
+  @apply btn bg-ink text-paper hover:bg-accent;
+}
+@utility btn-ghost {
+  @apply btn border-line bg-card text-ink hover:border-ink border;
+}
+@utility link {
+  @apply text-ink decoration-line hover:decoration-ink underline decoration-1 underline-offset-4 transition-colors;
+}
+@utility chip {
+  @apply border-line text-ink-soft inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs;
+}
+@utility stat {
+  @apply font-sans font-light tracking-[-0.04em] tabular-nums;
+}
+@utility card {
+  @apply border-line bg-card rounded-2xl border;
+}
+
+@layer components {
+  /* Scroll-driven fade-in; content is simply visible where unsupported. */
+  .reveal {
+    @supports (animation-timeline: view()) {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+  }
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

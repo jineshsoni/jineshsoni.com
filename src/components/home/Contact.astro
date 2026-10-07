@@ -1,0 +1,65 @@
+---
+import Icon from '@/components/Icon.astro';
+import { SITE, SOCIALS } from '@/consts';
+
+const icon = (name: string) =>
+  name === 'GitHub' ? 'github' : name === 'LinkedIn' ? 'linkedin' : 'x';
+---
+
+<section id="contact" class="container-page py-28" aria-labelledby="contact-title">
+  <div class="reveal border-t border-line pt-16 text-center">
+    <p class="eyebrow">Contact</p>
+    <h2 id="contact-title" class="mx-auto mt-5 max-w-3xl text-[clamp(2.8rem,7vw,5rem)] leading-[1]">
+      Building something with <em>AI</em>?
+    </h2>
+    <p class="mx-auto mt-6 max-w-xl text-lg text-ink-soft">
+      Taking AI from prototype to production, putting models on the device, architecture reviews or
+      leadership roles — I’d love to hear what you’re building.
+    </p>
+
+    <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <a
+        href={`mailto:${SITE.email}`}
+        class="font-serif text-3xl underline decoration-line decoration-1 underline-offset-8 transition-colors hover:decoration-ink sm:text-4xl"
+      >
+        {SITE.email}
+      </a>
+      <button type="button" class="btn-ghost !py-2" data-copy={SITE.email}>
+        <Icon name="copy" class="size-4" /> <span data-copy-label>Copy</span>
+      </button>
+    </div>
+
+    <ul class="mt-10 flex justify-center gap-6 text-sm text-muted">
+      {SOCIALS.map((s) => (
+        <li>
+          <a
+            href={s.url}
+            target="_blank"
+            rel="me noopener"
+            class="inline-flex items-center gap-2 hover:text-ink"
+          >
+            <Icon name={icon(s.name)} class="size-4" />
+            {s.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const label = btn.querySelector('[data-copy-label]');
+        try {
+          await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+          if (label) label.textContent = 'Copied';
+        } catch {
+          if (label) label.textContent = 'Copy failed';
+        }
+        setTimeout(() => label && (label.textContent = 'Copy'), 2000);
+      });
+    });
+  });
+</script>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  eyebrow: string;
+  /** May contain <em> for italic emphasis. */
+  title: string;
+  id?: string;
+  lede?: string;
+}
+const { eyebrow, title, id, lede } = Astro.props;
+---
+
+<div class="reveal mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+  <div class="max-w-2xl">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 id={id} class="mt-4 text-[clamp(2.4rem,5vw,3.6rem)] leading-[1.02]" set:html={title} />
+    {lede && <p class="mt-4 text-lg text-ink-soft">{lede}</p>}
+  </div>
+  <slot />
+</div>

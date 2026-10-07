@@ -1,0 +1,64 @@
+---
+import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Seo, { type Props as SeoProps } from '@/components/Seo.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { BLOG_ENABLED, SITE } from '@/consts';
+import displayFont from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
+import displayItalic from '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2?url';
+import bodyFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+
+export type Props = SeoProps;
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={displayItalic} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#faf9f7" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {BLOG_ENABLED && (
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`${SITE.name} — Blog`}
+        href="/rss.xml"
+      />
+    )}
+    <Seo {...props} />
+    <ClientRouter />
+    {SITE.cfAnalyticsToken && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: SITE.cfAnalyticsToken })}
+      />
+    )}
+  </head>
+  <body class="min-h-dvh overflow-x-clip">
+    <a
+      href="#main"
+      class="sr-only z-[100] rounded-full bg-ink px-4 py-2 text-paper focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+    >
+      Skip to content
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

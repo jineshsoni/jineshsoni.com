@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import Icon from '@/components/Icon.astro';
+import { getWork } from '@/lib/content';
+import { SITE } from '@/consts';
+
+const work = await getWork();
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+
+const linkIcons = {
+  github: 'github',
+  website: 'globe',
+  playStore: 'google-play',
+  appStore: 'apple',
+} as const;
+const linkLabels = {
+  github: 'GitHub',
+  website: 'Website',
+  playStore: 'Google Play',
+  appStore: 'App Store',
+} as const;
+
+const schema = [
+  {
+    '@type': 'CollectionPage',
+    url: `${SITE.url}/work/`,
+    name: 'Work & case studies',
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    hasPart: work.map((w) => ({
+      '@type': 'CreativeWork',
+      name: w.data.title,
+      url: `${SITE.url}/work/${w.id}/`,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Work & case studies"
+  description="Case studies and projects by Jinesh Soni — Flutter, Android and AI apps including Readable English, Bijak (600K+ downloads), Just Fresh, CoinTopper and Wandergier."
+  schema={schema}
+>
+  <section class="container-page pt-36 pb-12 sm:pt-44">
+    <p class="eyebrow">Work</p>
+    <h1 class="mt-4 max-w-4xl text-[clamp(2.8rem,7vw,5.5rem)] leading-[0.95]">
+      Apps I’ve <em>architected, built</em> and shipped.
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-ink-soft">
+      Deep dives into the products I’ve led — the problems, the architecture and the results —
+      followed by an archive of a decade of other projects.
+    </p>
+  </section>
+
+  <section class="container-page grid gap-6 pb-24" aria-label="Case studies">
+    {work.map((entry, i) => (
+      <WorkCard entry={entry} index={i} headingLevel="h2" />
+    ))}
+  </section>
+
+  <section class="container-page py-12" aria-labelledby="archive-title">
+    <SectionHeading id="archive-title" eyebrow="Archive" title="Other noteworthy projects" />
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead class="eyebrow border-b border-line">
+          <tr>
+            <th scope="col" class="py-3 pr-4 font-medium">
+              Year
+            </th>
+            <th scope="col" class="py-3 pr-4 font-medium">
+              Project
+            </th>
+            <th scope="col" class="hidden py-3 pr-4 font-medium md:table-cell">
+              Made at
+            </th>
+            <th scope="col" class="hidden py-3 pr-4 font-medium lg:table-cell">
+              Built with
+            </th>
+            <th scope="col" class="py-3 font-medium">
+              <span class="sr-only">Links</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {projects.map(({ data: p }) => (
+            <tr class="align-top transition-colors hover:bg-card">
+              <td class="py-5 pr-4 font-mono text-sm text-muted">{p.year}</td>
+              <td class="py-5 pr-4">
+                <p class="text-lg font-semibold">{p.title}</p>
+                <p class="mt-1 max-w-md text-sm text-ink-soft">{p.description}</p>
+              </td>
+              <td class="hidden py-5 pr-4 text-sm text-ink-soft md:table-cell">
+                {p.madeAt ?? '—'}
+              </td>
+              <td class="hidden py-5 pr-4 lg:table-cell">
+                <p class="max-w-xs text-sm text-muted">{p.tech.join(' · ')}</p>
+              </td>
+              <td class="py-5">
+                <ul class="flex gap-1">
+                  {(Object.keys(linkIcons) as (keyof typeof linkIcons)[])
+                    .filter((k) => p.links[k])
+                    .map((k) => (
+                      <li>
+                        <a
+                          href={p.links[k]}
+                          target="_blank"
+                          rel="noopener"
+                          class="grid size-9 place-items-center rounded-full text-ink-soft hover:bg-ink/5 hover:text-ink"
+                        >
+                          <Icon
+                            name={linkIcons[k]}
+                            class="size-4"
+                            label={`${p.title} — ${linkLabels[k]}`}
+                          />
+                        </a>
+                      </li>
+                    ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>
